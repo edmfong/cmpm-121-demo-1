@@ -21,11 +21,13 @@ button.textContent = "🐟";
 app.appendChild(button);
 
 // Event Listener when button is pressed
-button.addEventListener("click", (event: MouseEvent) => {
-    console.log("pressed")
-    fish++;
-    counterDisplay.textContent = `Fish: ${fish}`;
+button.addEventListener("click", () => {
+  console.log("pressed");
+  fish++;
+  counterDisplay.textContent = `Fish: ${fish}`;
 });
 
 // Update counter on display
-const counterDisplay = document.getElementById("counterDisplay") as HTMLDivElement;
+const counterDisplay = document.getElementById(
+  "counterDisplay",
+) as HTMLDivElement;
