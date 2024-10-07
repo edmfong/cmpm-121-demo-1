@@ -31,3 +31,9 @@ button.addEventListener("click", () => {
 const counterDisplay = document.getElementById(
   "counterDisplay",
 ) as HTMLDivElement;
+
+// Automatically increment fish every 1 second
+setInterval(() => {
+  fish++;
+  counterDisplay.textContent = `Fish: ${fish}`;
+}, 1000);
