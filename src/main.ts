@@ -10,10 +10,10 @@ header.innerHTML = gameName;
 app.append(header);
 
 // Create a new button element
-const button = document.createElement('button');
+const button = document.createElement("button");
 
 // Set button text and other properties
-button.textContent = '🐟';
+button.textContent = "🐟";
 
 // Append the button to the #app div instead of the body
 app.appendChild(button);
