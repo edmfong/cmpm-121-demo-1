@@ -74,3 +74,11 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+
+#counterDisplay {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 10px;
+  font-size: 20px;
+}
