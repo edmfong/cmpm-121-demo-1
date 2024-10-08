@@ -32,18 +32,17 @@ button.addEventListener("click", () => {
 const upgrade1Button = document.createElement("button");
 upgrade1Button.innerHTML = `Fish Per Click<br>${upgrade1Cost}x 🐟`;
 upgrade1Button.disabled = true;
-upgrade1Button.classList.add("upgradeButton-NotUpgradable");  // Assign a CSS class
+upgrade1Button.classList.add("upgradeButton-NotUpgradable"); // Assign a CSS class
 upgrades.appendChild(upgrade1Button);
 
 // Function to check if the upgrade is available
 function checkUpgrade1Availability() {
   if (fish >= upgrade1Cost) {
-    upgrade1Button.disabled = false;  // Enable the button
+    upgrade1Button.disabled = false; // Enable the button
     upgrade1Button.classList.remove("upgradeButton-NotUpgradable");
     upgrade1Button.classList.add("upgradeButton-Upgradable");
-  }
-  else {
-    upgrade1Button.disabled = true;  // Enable the button
+  } else {
+    upgrade1Button.disabled = true; // Enable the button
     upgrade1Button.classList.add("upgradeButton-NotUpgradable");
     upgrade1Button.classList.remove("upgradeButton-Upgradable");
   }
@@ -63,18 +62,17 @@ upgrade1Button.addEventListener("click", () => {
 const upgrade2Button = document.createElement("button");
 upgrade2Button.innerHTML = `Fish Per Sec<br>${upgrade2Cost}x 🐟`;
 upgrade2Button.disabled = true;
-upgrade2Button.classList.add("upgradeButton-NotUpgradable");  // Assign a CSS class
+upgrade2Button.classList.add("upgradeButton-NotUpgradable"); // Assign a CSS class
 upgrades.appendChild(upgrade2Button);
 
 // Function to check if the upgrade is available
 function checkUpgrade2Availability() {
   if (fish >= upgrade2Cost) {
-    upgrade2Button.disabled = false;  // Enable the button
+    upgrade2Button.disabled = false; // Enable the button
     upgrade2Button.classList.remove("upgradeButton-NotUpgradable");
     upgrade2Button.classList.add("upgradeButton-Upgradable");
-  }
-  else {
-    upgrade2Button.disabled = true;  // Enable the button
+  } else {
+    upgrade2Button.disabled = true; // Enable the button
     upgrade2Button.classList.add("upgradeButton-NotUpgradable");
     upgrade2Button.classList.remove("upgradeButton-Upgradable");
   }
@@ -85,8 +83,7 @@ upgrade2Button.addEventListener("click", () => {
   if (!upgrade2Button.disabled) {
     if (fishPerSecond == 0) {
       fishPerSecond = 1;
-    }
-    else {
+    } else {
       fishPerSecond *= 2;
     }
     fish -= upgrade2Cost;
