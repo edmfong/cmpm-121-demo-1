@@ -82,3 +82,31 @@ button:focus-visible {
   padding: 10px;
   font-size: 20px;
 }
+
+#upgrades {
+  position: absolute;
+  top: calc(10% + 10px);  /* Positioned below the height of #counterDisplay + 10px margin */
+  right: 0;
+  padding: 10px;
+  font-size: 20px;
+}
+
+#upgrades button {
+  width: 200px;                /* Set a fixed width for the buttons */
+  margin-bottom: 10px;        /* Space between buttons (vertical space) */
+  padding: 10px;              /* Padding inside the button */
+}
+
+.upgradeButton-NotUpgradable {
+  color: white;
+  background-color: #ff4242;
+  display: block;
+  text-align: left;
+}
+
+.upgradeButton-Upgradable {
+  color: white;
+  background-color: #68ff68;
+  display: block;
+  text-align: left;
+}
