@@ -4,7 +4,7 @@ const app: HTMLDivElement = document.querySelector("#app")!;
 
 const gameName = "Fishy Fish Fish";
 let fish: number = 0;
-let lastTimestamp: number = 0;  // Keeps track of the last frame's timestamp
+let lastTimestamp: number = 0; // Keeps track of the last frame's timestamp
 
 document.title = gameName;
 
@@ -24,7 +24,7 @@ app.appendChild(button);
 // Event Listener when button is pressed
 button.addEventListener("click", () => {
   fish++;
-  counterDisplay.textContent = `Fish: ${fish.toFixed(0)}`;  // Update counter display with 0 decimal places
+  counterDisplay.textContent = `Fish: ${fish.toFixed(0)}`; // Update counter display with 0 decimal places
 });
 
 // Update counter on display
@@ -43,13 +43,13 @@ const updateCounter = (timestamp: number) => {
   if (!lastTimestamp) lastTimestamp = timestamp;
 
   const elapsed = timestamp - lastTimestamp; // Time elapsed since last frame
-  const increment = elapsed / 1000;          // Increment by a fraction based on time (1 unit per second)
-  
-  fish += increment;
-  counterDisplay.textContent = `Fish: ${fish.toFixed(0)}`;  // Update counter display with 0 decimal places
+  const increment = elapsed / 1000; // Increment by a fraction based on time (1 unit per second)
 
-  lastTimestamp = timestamp;  // Update the last timestamp
-  requestAnimationFrame(updateCounter);  // Call the next animation frame
+  fish += increment;
+  counterDisplay.textContent = `Fish: ${fish.toFixed(0)}`; // Update counter display with 0 decimal places
+
+  lastTimestamp = timestamp; // Update the last timestamp
+  requestAnimationFrame(updateCounter); // Call the next animation frame
 };
 
 // Start the animation loop
