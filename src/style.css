@@ -81,6 +81,7 @@ button:focus-visible {
   right: 0;
   padding: 10px;
   font-size: 20px;
+  text-align: right;
 }
 
 #upgrades {
@@ -97,6 +98,8 @@ button:focus-visible {
   width: 200px; /* Set a fixed width for the buttons */
   margin-bottom: 10px; /* Space between buttons (vertical space) */
   padding: 10px; /* Padding inside the button */
+  display: flex;
+  justify-content: space-between;
 }
 
 .upgradeButton-NotUpgradable {
@@ -111,4 +114,12 @@ button:focus-visible {
   background-color: #68ff68;
   display: block;
   text-align: left;
+}
+
+#upgrades button div:last-child {
+  /* Optional styling for right div (cost) */
+  font-size: 20px;
+  color: rgb(95, 95, 95);
+  right: 0;
+  padding: 0.5em;
 }
