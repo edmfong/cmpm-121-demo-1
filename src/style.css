@@ -124,7 +124,7 @@ button:focus-visible {
   padding: 0.5em;
 }
 
-#upgrades img{
+#upgrades img {
   width: 20%; /* Set image width to 20% of button */
   height: auto; /* Maintain aspect ratio */
   object-fit: contain; /* Scale image without stretching */
@@ -135,6 +135,6 @@ button:focus-visible {
   padding: 10px; /* Padding inside the button */
 }
 
-.mainButton img{
+.mainButton img {
   width: 100%; /* Set a fixed width for the buttons */
 }
