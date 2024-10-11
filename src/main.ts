@@ -4,48 +4,92 @@ const app: HTMLDivElement = document.querySelector("#app")!;
 const upgrades: HTMLDivElement = document.querySelector("#upgrades")!;
 
 const gameName = "Fishy Fish Fish";
-let fish: number = 0;
+let fish: number = 1000;
 let lastTimestamp: number = 0; // Keeps track of the last frame's timestamp
 
 interface Item {
-  name: string,
-  cost: number,
-  rate: number,
+  name: string;
+  cost: number;
+  rate: number;
   fishPerClick: number | null;
-  fishPerSecond: number | null,
-  upgradesCount: number,
-  initialUpgrade: number,
-  upgradeCostIncrease: number,
-  imgSrc: string,
+  fishPerSecond: number | null;
+  upgradesCount: number;
+  initialUpgrade: number;
+  upgradeCostIncrease: number;
+  imgSrc: string;
   button: HTMLButtonElement | null;
   displayRightDiv: HTMLDivElement | null;
   displayLeftDiv: HTMLDivElement | null;
-};
+}
 
 const availableItems: Item[] = [
-  {name: "click", cost: 10, rate: 0, imgSrc: "img/paw.png", fishPerSecond: 0, 
-   fishPerClick: 1, upgradeCostIncrease: 1.15, initialUpgrade: 0, 
-   upgradesCount: 0, button: null, displayRightDiv: null, displayLeftDiv: null},
-  {name: "cat1", cost: 10, rate: 0, imgSrc: "img/cat1.png", fishPerSecond: 0, 
-   fishPerClick: null, upgradeCostIncrease: 1.15, initialUpgrade: 1, 
-   upgradesCount: 0, button: null, displayRightDiv: null, displayLeftDiv: null},
-  {name: "cat3", cost: 100, rate: 0, imgSrc: "img/cat2.png", fishPerSecond: 0, 
-   fishPerClick: null, upgradeCostIncrease: 1.15, initialUpgrade: 5, 
-   upgradesCount: 0, button: null, displayRightDiv: null, displayLeftDiv: null},
-  {name: "cat3", cost: 1000, rate: 0, imgSrc: "img/cat3.png", fishPerSecond: 0, 
-   fishPerClick: null, upgradeCostIncrease: 1.15, initialUpgrade: 50, 
-   upgradesCount: 0, button: null, displayRightDiv: null, displayLeftDiv: null},
-]
+  {
+    name: "click",
+    cost: 10,
+    rate: 0,
+    imgSrc: "img/paw.png",
+    fishPerSecond: 0,
+    fishPerClick: 1,
+    upgradeCostIncrease: 1.15,
+    initialUpgrade: 0,
+    upgradesCount: 0,
+    button: null,
+    displayRightDiv: null,
+    displayLeftDiv: null,
+  },
+  {
+    name: "cat1",
+    cost: 10,
+    rate: 0,
+    imgSrc: "img/cat1.png",
+    fishPerSecond: 0,
+    fishPerClick: null,
+    upgradeCostIncrease: 1.15,
+    initialUpgrade: 1,
+    upgradesCount: 0,
+    button: null,
+    displayRightDiv: null,
+    displayLeftDiv: null,
+  },
+  {
+    name: "cat3",
+    cost: 100,
+    rate: 0,
+    imgSrc: "img/cat2.png",
+    fishPerSecond: 0,
+    fishPerClick: null,
+    upgradeCostIncrease: 1.15,
+    initialUpgrade: 5,
+    upgradesCount: 0,
+    button: null,
+    displayRightDiv: null,
+    displayLeftDiv: null,
+  },
+  {
+    name: "cat3",
+    cost: 1000,
+    rate: 0,
+    imgSrc: "img/cat3.png",
+    fishPerSecond: 0,
+    fishPerClick: null,
+    upgradeCostIncrease: 1.15,
+    initialUpgrade: 50,
+    upgradesCount: 0,
+    button: null,
+    displayRightDiv: null,
+    displayLeftDiv: null,
+  },
+];
 
 // Create the upgrade buttons and associated elements
-function createUpgradeButton(index) {
+function createUpgradeButton(index: number) {
   // create button
   const upgrade = availableItems[index];
   const upgradeButton = document.createElement("button");
   const rightDiv = document.createElement("div");
   rightDiv.innerHTML = `Fish Per Sec<br>${upgrade.cost}x 🐟`;
   const leftDiv = document.createElement("div");
-  leftDiv.textContent = `${upgrade.fishPerSecond.toFixed(0)}`;
+  leftDiv.textContent = `${upgrade.fishPerSecond!.toFixed(0)}`;
   const img = document.createElement("img");
   img.src = upgrade.imgSrc;
 
@@ -71,16 +115,16 @@ availableItems.forEach((_, index) => {
 });
 
 // Check if the upgrade is available
-function checkUpgradeAvailability(index) {
+function checkUpgradeAvailability(index: number) {
   const upgrade = availableItems[index];
   if (fish >= upgrade.cost) {
-    upgrade.button.disabled = false;
-    upgrade.button.classList.remove("upgradeButton-NotUpgradable");
-    upgrade.button.classList.add("upgradeButton-Upgradable");
+    upgrade.button!.disabled = false;
+    upgrade.button!.classList.remove("upgradeButton-NotUpgradable");
+    upgrade.button!.classList.add("upgradeButton-Upgradable");
   } else {
-    upgrade.button.disabled = true;
-    upgrade.button.classList.add("upgradeButton-NotUpgradable");
-    upgrade.button.classList.remove("upgradeButton-Upgradable");
+    upgrade.button!.disabled = true;
+    upgrade.button!.classList.add("upgradeButton-NotUpgradable");
+    upgrade.button!.classList.remove("upgradeButton-Upgradable");
   }
 }
 
@@ -90,15 +134,15 @@ availableItems.forEach((_, index) => {
 });
 
 // Handle upgrade logic when button is pressed
-function handleUpgradeClick(index) {
+function handleUpgradeClick(index: number) {
   const upgrade = availableItems[index];
 
   // if disbled, check if there is enough fish to upgrade
-  if (!upgrade.button.disabled) {
+  if (!upgrade.button!.disabled) {
     if (upgrade.fishPerSecond == 0) {
       upgrade.fishPerSecond = upgrade.initialUpgrade; // Initial fish per second
     } else {
-      upgrade.fishPerSecond *= 1.15; // Increase fish per second by 15%
+      upgrade.fishPerSecond! *= 1.15; // Increase fish per second by 15%
     }
 
     fish -= upgrade.cost; // Deduct the cost from the fish total
@@ -106,14 +150,14 @@ function handleUpgradeClick(index) {
     upgrade.upgradesCount++; // Increment the number of upgrades
 
     // Update the UI
-    upgrade.displayRightDiv.innerHTML = `Fish Per Sec<br>${upgrade.cost.toFixed(0)}x 🐟`;
-    upgrade.displayLeftDiv.textContent = `${upgrade.upgradesCount.toFixed(0)}`;
+    upgrade.displayRightDiv!.innerHTML = `Fish Per Sec<br>${upgrade.cost.toFixed(0)}x 🐟`;
+    upgrade.displayLeftDiv!.textContent = `${upgrade.upgradesCount.toFixed(0)}`;
   }
 }
 
 // Add event listeners to buttons
 availableItems.forEach((_, index) => {
-  availableItems[index].button.addEventListener("click", () => {
+  availableItems[index].button!.addEventListener("click", () => {
     handleUpgradeClick(index);
   });
 });
@@ -134,7 +178,7 @@ app.appendChild(mainButton);
 
 // Event Listener when button is pressed
 mainButton.addEventListener("click", () => {
-  fish += availableItems[0].fishPerClick;
+  fish += availableItems[0].fishPerClick!;
   counterDisplay.textContent = `Fish: ${fish.toFixed(0)}`; // Update counter display with 0 decimal places
 });
 
@@ -150,9 +194,13 @@ const updateCounter = (timestamp: number) => {
   const elapsed = timestamp - lastTimestamp; // Time elapsed since last frame
   const increment = elapsed / 1000; // Increment by a fraction based on time (1 unit per second)
 
-  fish += increment * (availableItems[1].fishPerSecond + availableItems[2].fishPerSecond + availableItems[3].fishPerSecond);
+  fish +=
+    increment *
+    (availableItems[1].fishPerSecond! +
+      availableItems[2].fishPerSecond! +
+      availableItems[3].fishPerSecond!);
   counterDisplay.innerHTML = `${fish.toFixed(0)} 🐟<br>
-      ${(availableItems[1].fishPerSecond + availableItems[2].fishPerSecond + availableItems[3].fishPerSecond).toFixed(2)} Fish/sec`; // Update counter display with 0 decimal places
+      ${(availableItems[1].fishPerSecond! + availableItems[2].fishPerSecond! + availableItems[3].fishPerSecond!).toFixed(2)} Fish/sec`; // Update counter display with 0 decimal places
 
   lastTimestamp = timestamp; // Update the last timestamp
   requestAnimationFrame(updateCounter); // Call the next animation frame
