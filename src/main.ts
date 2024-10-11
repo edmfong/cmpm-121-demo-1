@@ -216,7 +216,7 @@ const updateCounter = (timestamp: number) => {
 
   fish += increment * (fishPerSecond1 + fishPerSecond2 + fishPerSecond3);
   counterDisplay.innerHTML = `${fish.toFixed(0)} 🐟<br>
-      ${(fishPerSecond1 + fishPerSecond2 + fishPerSecond3)} Fish/sec`; // Update counter display with 0 decimal places
+      ${fishPerSecond1 + fishPerSecond2 + fishPerSecond3} Fish/sec`; // Update counter display with 0 decimal places
 
   lastTimestamp = timestamp; // Update the last timestamp
   requestAnimationFrame(updateCounter); // Call the next animation frame
