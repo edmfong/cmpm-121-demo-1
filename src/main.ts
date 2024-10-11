@@ -5,19 +5,118 @@ const upgrades: HTMLDivElement = document.querySelector("#upgrades")!;
 
 const gameName = "Fishy Fish Fish";
 let fish: number = 0;
-let fishPerClick: number = 1;
-let fishPerSecond1: number = 0;
-let fishPerSecond2: number = 0;
-let fishPerSecond3: number = 0;
-let upgrade0Cost: number = 10;
-let upgrade1Cost: number = 10;
-let upgrade2Cost: number = 100;
-let upgrade3Cost: number = 1000;
-let fishPerClickUpgrades: number = 0;
-let fishPerSec1Upgrades: number = 0;
-let fishPerSec2Upgrades: number = 0;
-let fishPerSec3Upgrades: number = 0;
 let lastTimestamp: number = 0; // Keeps track of the last frame's timestamp
+
+interface Item {
+  name: string,
+  cost: number,
+  rate: number,
+  fishPerClick: number | null;
+  fishPerSecond: number | null,
+  upgradesCount: number,
+  initialUpgrade: number,
+  upgradeCostIncrease: number,
+  imgSrc: string,
+  button: HTMLButtonElement | null;
+  displayRightDiv: HTMLDivElement | null;
+  displayLeftDiv: HTMLDivElement | null;
+};
+
+const availableItems: Item[] = [
+  {name: "click", cost: 10, rate: 0, imgSrc: "img/paw.png", fishPerSecond: 0, 
+   fishPerClick: 1, upgradeCostIncrease: 1.15, initialUpgrade: 0, 
+   upgradesCount: 0, button: null, displayRightDiv: null, displayLeftDiv: null},
+  {name: "cat1", cost: 10, rate: 0, imgSrc: "img/cat1.png", fishPerSecond: 0, 
+   fishPerClick: null, upgradeCostIncrease: 1.15, initialUpgrade: 1, 
+   upgradesCount: 0, button: null, displayRightDiv: null, displayLeftDiv: null},
+  {name: "cat3", cost: 100, rate: 0, imgSrc: "img/cat2.png", fishPerSecond: 0, 
+   fishPerClick: null, upgradeCostIncrease: 1.15, initialUpgrade: 5, 
+   upgradesCount: 0, button: null, displayRightDiv: null, displayLeftDiv: null},
+  {name: "cat3", cost: 1000, rate: 0, imgSrc: "img/cat3.png", fishPerSecond: 0, 
+   fishPerClick: null, upgradeCostIncrease: 1.15, initialUpgrade: 50, 
+   upgradesCount: 0, button: null, displayRightDiv: null, displayLeftDiv: null},
+]
+
+// Create the upgrade buttons and associated elements
+function createUpgradeButton(index) {
+  // create button
+  const upgrade = availableItems[index];
+  const upgradeButton = document.createElement("button");
+  const rightDiv = document.createElement("div");
+  rightDiv.innerHTML = `Fish Per Sec<br>${upgrade.cost}x 🐟`;
+  const leftDiv = document.createElement("div");
+  leftDiv.textContent = `${upgrade.fishPerSecond.toFixed(0)}`;
+  const img = document.createElement("img");
+  img.src = upgrade.imgSrc;
+
+  // adds elements to the button
+  upgradeButton.append(img);
+  upgradeButton.appendChild(rightDiv);
+  upgradeButton.appendChild(leftDiv);
+  upgradeButton.disabled = true;
+  upgradeButton.classList.add("upgradeButton-NotUpgradable");
+
+  // appends button to the DOM
+  upgrades.appendChild(upgradeButton);
+
+  // Store references in the upgrade data
+  upgrade.button = upgradeButton;
+  upgrade.displayRightDiv = rightDiv;
+  upgrade.displayLeftDiv = leftDiv;
+}
+
+// Initialize upgrade buttons
+availableItems.forEach((_, index) => {
+  createUpgradeButton(index);
+});
+
+// Check if the upgrade is available
+function checkUpgradeAvailability(index) {
+  const upgrade = availableItems[index];
+  if (fish >= upgrade.cost) {
+    upgrade.button.disabled = false;
+    upgrade.button.classList.remove("upgradeButton-NotUpgradable");
+    upgrade.button.classList.add("upgradeButton-Upgradable");
+  } else {
+    upgrade.button.disabled = true;
+    upgrade.button.classList.add("upgradeButton-NotUpgradable");
+    upgrade.button.classList.remove("upgradeButton-Upgradable");
+  }
+}
+
+// Initialize upgrade buttons
+availableItems.forEach((_, index) => {
+  checkUpgradeAvailability(index);
+});
+
+// Handle upgrade logic when button is pressed
+function handleUpgradeClick(index) {
+  const upgrade = availableItems[index];
+
+  // if disbled, check if there is enough fish to upgrade
+  if (!upgrade.button.disabled) {
+    if (upgrade.fishPerSecond == 0) {
+      upgrade.fishPerSecond = upgrade.initialUpgrade; // Initial fish per second
+    } else {
+      upgrade.fishPerSecond *= 1.15; // Increase fish per second by 15%
+    }
+
+    fish -= upgrade.cost; // Deduct the cost from the fish total
+    upgrade.cost *= upgrade.upgradeCostIncrease; // Increase the cost for the next upgrade
+    upgrade.upgradesCount++; // Increment the number of upgrades
+
+    // Update the UI
+    upgrade.displayRightDiv.innerHTML = `Fish Per Sec<br>${upgrade.cost.toFixed(0)}x 🐟`;
+    upgrade.displayLeftDiv.textContent = `${upgrade.upgradesCount.toFixed(0)}`;
+  }
+}
+
+// Add event listeners to buttons
+availableItems.forEach((_, index) => {
+  availableItems[index].button.addEventListener("click", () => {
+    handleUpgradeClick(index);
+  });
+});
 
 document.title = gameName;
 
@@ -26,201 +125,23 @@ header.innerHTML = gameName;
 app.append(header);
 
 // main button
-const button = document.createElement("button");
+const mainButton = document.createElement("button");
 const fishImg = document.createElement("img");
 fishImg.src = "img/fish.png";
-button.append(fishImg);
-button.classList.add("mainButton");
-app.appendChild(button);
+mainButton.append(fishImg);
+mainButton.classList.add("mainButton");
+app.appendChild(mainButton);
 
 // Event Listener when button is pressed
-button.addEventListener("click", () => {
-  fish += fishPerClick;
+mainButton.addEventListener("click", () => {
+  fish += availableItems[0].fishPerClick;
   counterDisplay.textContent = `Fish: ${fish.toFixed(0)}`; // Update counter display with 0 decimal places
-});
-
-// upgrade0 button
-const upgrade0Button = document.createElement("button");
-const rightDivUpgrade0 = document.createElement("div");
-rightDivUpgrade0.innerHTML = `Fish Per Click<br>${upgrade0Cost}x 🐟`;
-const leftDivUpgrade0 = document.createElement("div");
-leftDivUpgrade0.textContent = `${fishPerClickUpgrades.toFixed(0)}`;
-const pawImg = document.createElement("img");
-pawImg.src = "img/paw.png";
-upgrade0Button.append(pawImg);
-upgrade0Button.appendChild(rightDivUpgrade0);
-upgrade0Button.appendChild(leftDivUpgrade0);
-upgrade0Button.disabled = true;
-upgrade0Button.classList.add("upgradeButton-NotUpgradable"); // Assign a CSS class
-upgrades.appendChild(upgrade0Button);
-
-// Function to check if the upgrade0 is available
-function checkUpgrade0Availability() {
-  if (fish >= upgrade0Cost) {
-    upgrade0Button.disabled = false; // Enable the button
-    upgrade0Button.classList.remove("upgradeButton-NotUpgradable");
-    upgrade0Button.classList.add("upgradeButton-Upgradable");
-  } else {
-    upgrade0Button.disabled = true; // Enable the button
-    upgrade0Button.classList.add("upgradeButton-NotUpgradable");
-    upgrade0Button.classList.remove("upgradeButton-Upgradable");
-  }
-}
-
-// Event Listener when button is pressed
-upgrade0Button.addEventListener("click", () => {
-  if (!upgrade0Button.disabled) {
-    fishPerClick++;
-    fishPerClickUpgrades++;
-    fish -= upgrade0Cost;
-    upgrade0Cost *= 1.15;
-    rightDivUpgrade0.innerHTML = `Fish Per Click<br>${upgrade0Cost.toFixed(0)}x 🐟`;
-    leftDivUpgrade0.textContent = `${fishPerClickUpgrades.toFixed(0)}`;
-  }
-});
-
-// upgrade1 button
-const upgrade1Button = document.createElement("button");
-const rightDivUpgrade1 = document.createElement("div");
-rightDivUpgrade1.innerHTML = `Fish Per Sec<br>${upgrade1Cost}x 🐟`;
-const leftDivUpgrade1 = document.createElement("div");
-leftDivUpgrade1.textContent = `${fishPerSecond1.toFixed(0)}`;
-const cat1Img = document.createElement("img");
-cat1Img.src = "img/cat1.png";
-upgrade1Button.append(cat1Img);
-upgrade1Button.appendChild(rightDivUpgrade1);
-upgrade1Button.appendChild(leftDivUpgrade1);
-upgrade1Button.disabled = true;
-upgrade1Button.classList.add("upgradeButton-NotUpgradable"); // Assign a CSS class
-upgrades.appendChild(upgrade1Button);
-
-// Function to check if the upgrade is available
-function checkUpgrade1Availability() {
-  if (fish >= upgrade1Cost) {
-    upgrade1Button.disabled = false; // Enable the button
-    upgrade1Button.classList.remove("upgradeButton-NotUpgradable");
-    upgrade1Button.classList.add("upgradeButton-Upgradable");
-  } else {
-    upgrade1Button.disabled = true; // Enable the button
-    upgrade1Button.classList.add("upgradeButton-NotUpgradable");
-    upgrade1Button.classList.remove("upgradeButton-Upgradable");
-  }
-}
-
-// Event Listener when button is pressed
-upgrade1Button.addEventListener("click", () => {
-  if (!upgrade1Button.disabled) {
-    if (fishPerSecond1 == 0) {
-      fishPerSecond1 = 1;
-    } else {
-      fishPerSecond1 *= 1.15;
-    }
-    fish -= upgrade1Cost;
-    upgrade1Cost *= 1.15;
-    fishPerSec1Upgrades++;
-    rightDivUpgrade1.innerHTML = `Fish Per Sec<br>${upgrade1Cost.toFixed(0)}x 🐟`;
-    leftDivUpgrade1.textContent = `${fishPerSec1Upgrades.toFixed(0)}`;
-  }
-});
-
-// upgrade2 button
-const upgrade2Button = document.createElement("button");
-const rightDivUpgrade2 = document.createElement("div");
-rightDivUpgrade2.innerHTML = `Fish Per Sec<br>${upgrade2Cost}x 🐟`;
-const leftDivUpgrade2 = document.createElement("div");
-leftDivUpgrade2.textContent = `${fishPerSecond2.toFixed(0)}`;
-const cat2Img = document.createElement("img");
-cat2Img.src = "img/cat2.png";
-upgrade2Button.append(cat2Img);
-upgrade2Button.appendChild(rightDivUpgrade2);
-upgrade2Button.appendChild(leftDivUpgrade2);
-upgrade2Button.disabled = true;
-upgrade2Button.classList.add("upgradeButton-NotUpgradable"); // Assign a CSS class
-upgrades.appendChild(upgrade2Button);
-
-// Function to check if the upgrade is available
-function checkUpgrade2Availability() {
-  if (fish >= upgrade2Cost) {
-    upgrade2Button.disabled = false; // Enable the button
-    upgrade2Button.classList.remove("upgradeButton-NotUpgradable");
-    upgrade2Button.classList.add("upgradeButton-Upgradable");
-  } else {
-    upgrade2Button.disabled = true; // Enable the button
-    upgrade2Button.classList.add("upgradeButton-NotUpgradable");
-    upgrade2Button.classList.remove("upgradeButton-Upgradable");
-  }
-}
-
-// Event Listener when button is pressed
-upgrade2Button.addEventListener("click", () => {
-  if (!upgrade2Button.disabled) {
-    if (fishPerSecond2 == 0) {
-      fishPerSecond2 = 5;
-    } else {
-      fishPerSecond2 *= 1.15;
-    }
-    fish -= upgrade2Cost;
-    upgrade2Cost *= 1.15;
-    fishPerSec2Upgrades++;
-    rightDivUpgrade2.innerHTML = `Fish Per Sec<br>${upgrade2Cost.toFixed(0)}x 🐟`;
-    leftDivUpgrade2.textContent = `${fishPerSec2Upgrades.toFixed(0)}`;
-  }
-});
-
-// upgrade3 button
-const upgrade3Button = document.createElement("button");
-const rightDivUpgrade3 = document.createElement("div");
-rightDivUpgrade3.innerHTML = `Fish Per Sec<br>${upgrade3Cost}x 🐟`;
-const leftDivUpgrade3 = document.createElement("div");
-leftDivUpgrade3.textContent = `${fishPerSecond3.toFixed(0)}`;
-const cat3Img = document.createElement("img");
-cat3Img.src = "img/cat3.png";
-upgrade3Button.append(cat3Img);
-upgrade3Button.appendChild(rightDivUpgrade3);
-upgrade3Button.appendChild(leftDivUpgrade3);
-upgrade3Button.disabled = true;
-upgrade3Button.classList.add("upgradeButton-NotUpgradable"); // Assign a CSS class
-upgrades.appendChild(upgrade3Button);
-
-// Function to check if the upgrade is available
-function checkUpgrade3Availability() {
-  if (fish >= upgrade3Cost) {
-    upgrade3Button.disabled = false; // Enable the button
-    upgrade3Button.classList.remove("upgradeButton-NotUpgradable");
-    upgrade3Button.classList.add("upgradeButton-Upgradable");
-  } else {
-    upgrade3Button.disabled = true; // Enable the button
-    upgrade3Button.classList.add("upgradeButton-NotUpgradable");
-    upgrade3Button.classList.remove("upgradeButton-Upgradable");
-  }
-}
-
-// Event Listener when button is pressed
-upgrade3Button.addEventListener("click", () => {
-  if (!upgrade3Button.disabled) {
-    if (fishPerSecond3 == 0) {
-      fishPerSecond3 = 50;
-    } else {
-      fishPerSecond3 *= 1.15;
-    }
-    fish -= upgrade3Cost;
-    upgrade3Cost *= 1.15;
-    fishPerSec3Upgrades++;
-    rightDivUpgrade3.innerHTML = `Fish Per Sec<br>${upgrade3Cost.toFixed(0)}x 🐟`;
-    leftDivUpgrade3.textContent = `${fishPerSec3Upgrades.toFixed(0)}`;
-  }
 });
 
 // Update counter on display
 const counterDisplay = document.getElementById(
   "counterDisplay",
 ) as HTMLDivElement;
-
-// Automatically increment fish every 1 second
-// setInterval(() => {
-//   fish++;
-//   counterDisplay.textContent = `Fish: ${fish}`;
-// }, 1000);
 
 // Function to increment the fish counter based on elapsed time
 const updateCounter = (timestamp: number) => {
@@ -229,16 +150,16 @@ const updateCounter = (timestamp: number) => {
   const elapsed = timestamp - lastTimestamp; // Time elapsed since last frame
   const increment = elapsed / 1000; // Increment by a fraction based on time (1 unit per second)
 
-  fish += increment * (fishPerSecond1 + fishPerSecond2 + fishPerSecond3);
+  fish += increment * (availableItems[1].fishPerSecond + availableItems[2].fishPerSecond + availableItems[3].fishPerSecond);
   counterDisplay.innerHTML = `${fish.toFixed(0)} 🐟<br>
-      ${(fishPerSecond1 + fishPerSecond2 + fishPerSecond3).toFixed(2)} Fish/sec`; // Update counter display with 0 decimal places
+      ${(availableItems[1].fishPerSecond + availableItems[2].fishPerSecond + availableItems[3].fishPerSecond).toFixed(2)} Fish/sec`; // Update counter display with 0 decimal places
 
   lastTimestamp = timestamp; // Update the last timestamp
   requestAnimationFrame(updateCounter); // Call the next animation frame
-  checkUpgrade0Availability();
-  checkUpgrade1Availability();
-  checkUpgrade2Availability();
-  checkUpgrade3Availability();
+  checkUpgradeAvailability(0);
+  checkUpgradeAvailability(1);
+  checkUpgradeAvailability(2);
+  checkUpgradeAvailability(3);
 };
 
 // Start the animation loop
