@@ -4,7 +4,7 @@ const app: HTMLDivElement = document.querySelector("#app")!;
 const upgrades: HTMLDivElement = document.querySelector("#upgrades")!;
 
 const gameName = "Fishy Fish Fish";
-let fish: number = 1000;
+let fish: number = 5000;
 let lastTimestamp: number = 0; // Keeps track of the last frame's timestamp
 
 interface Item {
@@ -52,7 +52,7 @@ const availableItems: Item[] = [
     displayLeftDiv: null,
   },
   {
-    name: "cat3",
+    name: "cat2",
     cost: 100,
     rate: 0,
     imgSrc: "img/cat2.png",
@@ -74,6 +74,20 @@ const availableItems: Item[] = [
     fishPerClick: null,
     upgradeCostIncrease: 1.15,
     initialUpgrade: 50,
+    upgradesCount: 0,
+    button: null,
+    displayRightDiv: null,
+    displayLeftDiv: null,
+  },
+  {
+    name: "cat4",
+    cost: 5000,
+    rate: 0,
+    imgSrc: "img/cat4.png",
+    fishPerSecond: 0,
+    fishPerClick: null,
+    upgradeCostIncrease: 1.15,
+    initialUpgrade: 100,
     upgradesCount: 0,
     button: null,
     displayRightDiv: null,
@@ -128,7 +142,7 @@ function checkUpgradeAvailability(index: number) {
   }
 }
 
-// Initialize upgrade buttons
+// check upgrade buttons
 availableItems.forEach((_, index) => {
   checkUpgradeAvailability(index);
 });
@@ -198,16 +212,18 @@ const updateCounter = (timestamp: number) => {
     increment *
     (availableItems[1].fishPerSecond! +
       availableItems[2].fishPerSecond! +
-      availableItems[3].fishPerSecond!);
+      availableItems[3].fishPerSecond! +
+      availableItems[4].fishPerSecond!);
   counterDisplay.innerHTML = `${fish.toFixed(0)} 🐟<br>
-      ${(availableItems[1].fishPerSecond! + availableItems[2].fishPerSecond! + availableItems[3].fishPerSecond!).toFixed(2)} Fish/sec`; // Update counter display with 0 decimal places
+      ${(availableItems[1].fishPerSecond! + availableItems[2].fishPerSecond! + availableItems[3].fishPerSecond! + availableItems[4].fishPerSecond!).toFixed(2)} Fish/sec`; // Update counter display with 0 decimal places
 
   lastTimestamp = timestamp; // Update the last timestamp
   requestAnimationFrame(updateCounter); // Call the next animation frame
-  checkUpgradeAvailability(0);
-  checkUpgradeAvailability(1);
-  checkUpgradeAvailability(2);
-  checkUpgradeAvailability(3);
+
+  // check upgrade buttons
+  availableItems.forEach((_, index) => {
+    checkUpgradeAvailability(index);
+  });
 };
 
 // Start the animation loop
