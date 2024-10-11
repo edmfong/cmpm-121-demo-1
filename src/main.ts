@@ -67,7 +67,7 @@ upgrade0Button.addEventListener("click", () => {
     fishPerClick++;
     fishPerClickUpgrades++;
     fish -= upgrade0Cost;
-    upgrade0Cost *= 2;
+    upgrade0Cost *= 1.15;
     rightDivUpgrade0.innerHTML = `Fish Per Click<br>${upgrade0Cost}x 🐟`;
     leftDivUpgrade0.textContent = `${fishPerClickUpgrades}`;
   }
@@ -107,7 +107,7 @@ upgrade1Button.addEventListener("click", () => {
       fishPerSecond1 *= 2;
     }
     fish -= upgrade1Cost;
-    upgrade1Cost *= 2;
+    upgrade1Cost *= 1.15;
     fishPerSec1Upgrades++;
     rightDivUpgrade1.innerHTML = `Fish Per Sec<br>${upgrade1Cost}x 🐟`;
     leftDivUpgrade1.textContent = `${fishPerSec1Upgrades}`;
@@ -148,7 +148,7 @@ upgrade2Button.addEventListener("click", () => {
       fishPerSecond2 *= 2;
     }
     fish -= upgrade2Cost;
-    upgrade2Cost *= 2;
+    upgrade2Cost *= 1.15;
     fishPerSec2Upgrades++;
     rightDivUpgrade2.innerHTML = `Fish Per Sec<br>${upgrade2Cost}x 🐟`;
     leftDivUpgrade2.textContent = `${fishPerSec2Upgrades}`;
@@ -189,7 +189,7 @@ upgrade3Button.addEventListener("click", () => {
       fishPerSecond3 *= 2;
     }
     fish -= upgrade3Cost;
-    upgrade3Cost *= 2;
+    upgrade3Cost *= 1.15;
     fishPerSec3Upgrades++;
     rightDivUpgrade3.innerHTML = `Fish Per Sec<br>${upgrade3Cost}x 🐟`;
     leftDivUpgrade3.textContent = `${fishPerSec3Upgrades}`;
