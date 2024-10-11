@@ -27,7 +27,10 @@ app.append(header);
 
 // main button
 const button = document.createElement("button");
-button.textContent = "🐟";
+const fishImg = document.createElement("img");
+fishImg.src = "img/fish.png";
+button.append(fishImg);
+button.classList.add("mainButton");
 app.appendChild(button);
 
 // Event Listener when button is pressed
@@ -41,7 +44,10 @@ const upgrade0Button = document.createElement("button");
 const rightDivUpgrade0 = document.createElement("div");
 rightDivUpgrade0.innerHTML = `Fish Per Click<br>${upgrade0Cost}x 🐟`;
 const leftDivUpgrade0 = document.createElement("div");
-leftDivUpgrade0.textContent = `${fishPerClickUpgrades}`;
+leftDivUpgrade0.textContent = `${fishPerClickUpgrades.toFixed(0)}`;
+const pawImg = document.createElement("img");
+pawImg.src = "img/paw.png";
+upgrade0Button.append(pawImg);
 upgrade0Button.appendChild(rightDivUpgrade0);
 upgrade0Button.appendChild(leftDivUpgrade0);
 upgrade0Button.disabled = true;
@@ -68,8 +74,8 @@ upgrade0Button.addEventListener("click", () => {
     fishPerClickUpgrades++;
     fish -= upgrade0Cost;
     upgrade0Cost *= 1.15;
-    rightDivUpgrade0.innerHTML = `Fish Per Click<br>${upgrade0Cost}x 🐟`;
-    leftDivUpgrade0.textContent = `${fishPerClickUpgrades}`;
+    rightDivUpgrade0.innerHTML = `Fish Per Click<br>${upgrade0Cost.toFixed(0)}x 🐟`;
+    leftDivUpgrade0.textContent = `${fishPerClickUpgrades.toFixed(0)}`;
   }
 });
 
@@ -78,7 +84,10 @@ const upgrade1Button = document.createElement("button");
 const rightDivUpgrade1 = document.createElement("div");
 rightDivUpgrade1.innerHTML = `Fish Per Sec<br>${upgrade1Cost}x 🐟`;
 const leftDivUpgrade1 = document.createElement("div");
-leftDivUpgrade1.textContent = `${fishPerSecond1}`;
+leftDivUpgrade1.textContent = `${fishPerSecond1.toFixed(0)}`;
+const cat1Img = document.createElement("img");
+cat1Img.src = "img/cat1.png";
+upgrade1Button.append(cat1Img);
 upgrade1Button.appendChild(rightDivUpgrade1);
 upgrade1Button.appendChild(leftDivUpgrade1);
 upgrade1Button.disabled = true;
@@ -104,13 +113,13 @@ upgrade1Button.addEventListener("click", () => {
     if (fishPerSecond1 == 0) {
       fishPerSecond1 = 1;
     } else {
-      fishPerSecond1 *= 2;
+      fishPerSecond1 *= 1.15;
     }
     fish -= upgrade1Cost;
     upgrade1Cost *= 1.15;
     fishPerSec1Upgrades++;
-    rightDivUpgrade1.innerHTML = `Fish Per Sec<br>${upgrade1Cost}x 🐟`;
-    leftDivUpgrade1.textContent = `${fishPerSec1Upgrades}`;
+    rightDivUpgrade1.innerHTML = `Fish Per Sec<br>${upgrade1Cost.toFixed(0)}x 🐟`;
+    leftDivUpgrade1.textContent = `${fishPerSec1Upgrades.toFixed(0)}`;
   }
 });
 
@@ -119,7 +128,10 @@ const upgrade2Button = document.createElement("button");
 const rightDivUpgrade2 = document.createElement("div");
 rightDivUpgrade2.innerHTML = `Fish Per Sec<br>${upgrade2Cost}x 🐟`;
 const leftDivUpgrade2 = document.createElement("div");
-leftDivUpgrade2.textContent = `${fishPerSecond2}`;
+leftDivUpgrade2.textContent = `${fishPerSecond2.toFixed(0)}`;
+const cat2Img = document.createElement("img");
+cat2Img.src = "img/cat2.png";
+upgrade2Button.append(cat2Img);
 upgrade2Button.appendChild(rightDivUpgrade2);
 upgrade2Button.appendChild(leftDivUpgrade2);
 upgrade2Button.disabled = true;
@@ -145,13 +157,13 @@ upgrade2Button.addEventListener("click", () => {
     if (fishPerSecond2 == 0) {
       fishPerSecond2 = 5;
     } else {
-      fishPerSecond2 *= 2;
+      fishPerSecond2 *= 1.15;
     }
     fish -= upgrade2Cost;
     upgrade2Cost *= 1.15;
     fishPerSec2Upgrades++;
-    rightDivUpgrade2.innerHTML = `Fish Per Sec<br>${upgrade2Cost}x 🐟`;
-    leftDivUpgrade2.textContent = `${fishPerSec2Upgrades}`;
+    rightDivUpgrade2.innerHTML = `Fish Per Sec<br>${upgrade2Cost.toFixed(0)}x 🐟`;
+    leftDivUpgrade2.textContent = `${fishPerSec2Upgrades.toFixed(0)}`;
   }
 });
 
@@ -160,7 +172,10 @@ const upgrade3Button = document.createElement("button");
 const rightDivUpgrade3 = document.createElement("div");
 rightDivUpgrade3.innerHTML = `Fish Per Sec<br>${upgrade3Cost}x 🐟`;
 const leftDivUpgrade3 = document.createElement("div");
-leftDivUpgrade3.textContent = `${fishPerSecond3}`;
+leftDivUpgrade3.textContent = `${fishPerSecond3.toFixed(0)}`;
+const cat3Img = document.createElement("img");
+cat3Img.src = "img/cat3.png";
+upgrade3Button.append(cat3Img);
 upgrade3Button.appendChild(rightDivUpgrade3);
 upgrade3Button.appendChild(leftDivUpgrade3);
 upgrade3Button.disabled = true;
@@ -186,13 +201,13 @@ upgrade3Button.addEventListener("click", () => {
     if (fishPerSecond3 == 0) {
       fishPerSecond3 = 50;
     } else {
-      fishPerSecond3 *= 2;
+      fishPerSecond3 *= 1.15;
     }
     fish -= upgrade3Cost;
     upgrade3Cost *= 1.15;
     fishPerSec3Upgrades++;
-    rightDivUpgrade3.innerHTML = `Fish Per Sec<br>${upgrade3Cost}x 🐟`;
-    leftDivUpgrade3.textContent = `${fishPerSec3Upgrades}`;
+    rightDivUpgrade3.innerHTML = `Fish Per Sec<br>${upgrade3Cost.toFixed(0)}x 🐟`;
+    leftDivUpgrade3.textContent = `${fishPerSec3Upgrades.toFixed(0)}`;
   }
 });
 
@@ -216,7 +231,7 @@ const updateCounter = (timestamp: number) => {
 
   fish += increment * (fishPerSecond1 + fishPerSecond2 + fishPerSecond3);
   counterDisplay.innerHTML = `${fish.toFixed(0)} 🐟<br>
-      ${fishPerSecond1 + fishPerSecond2 + fishPerSecond3} Fish/sec`; // Update counter display with 0 decimal places
+      ${(fishPerSecond1 + fishPerSecond2 + fishPerSecond3).toFixed(2)} Fish/sec`; // Update counter display with 0 decimal places
 
   lastTimestamp = timestamp; // Update the last timestamp
   requestAnimationFrame(updateCounter); // Call the next animation frame
