@@ -38,7 +38,8 @@ const availableItems: Item[] = [
     button: null,
     displayRightDiv: null,
     displayLeftDiv: null,
-    flavorText: "With a swift swipe, the paw snags fish like a pro. Boost your fish-per-click game!",
+    flavorText:
+      "With a swift swipe, the paw snags fish like a pro. Boost your fish-per-click game!",
     flavorTextDiv: null,
   },
   {
@@ -54,7 +55,8 @@ const availableItems: Item[] = [
     button: null,
     displayRightDiv: null,
     displayLeftDiv: null,
-    flavorText: "This cat may be grumpy, but it’s still putting in the work. Slow and steady wins the fish!",
+    flavorText:
+      "This cat may be grumpy, but it’s still putting in the work. Slow and steady wins the fish!",
     flavorTextDiv: null,
   },
   {
@@ -70,7 +72,8 @@ const availableItems: Item[] = [
     button: null,
     displayRightDiv: null,
     displayLeftDiv: null,
-    flavorText: "Sleek and mysterious, the gray cat brings a bit more fish to the table, when it is in the mood.",
+    flavorText:
+      "Sleek and mysterious, the gray cat brings a bit more fish to the table, when it is in the mood.",
     flavorTextDiv: null,
   },
   {
@@ -86,7 +89,8 @@ const availableItems: Item[] = [
     button: null,
     displayRightDiv: null,
     displayLeftDiv: null,
-    flavorText: "Friendly and curious, this tabby is always on the hunt for fish—expect more from this little fisher!",
+    flavorText:
+      "Friendly and curious, this tabby is always on the hunt for fish—expect more from this little fisher!",
     flavorTextDiv: null,
   },
   {
@@ -102,7 +106,8 @@ const availableItems: Item[] = [
     button: null,
     displayRightDiv: null,
     displayLeftDiv: null,
-    flavorText: "The fish just keep rolling in with this lucky feline! Every second feels like a jackpot.",
+    flavorText:
+      "The fish just keep rolling in with this lucky feline! Every second feels like a jackpot.",
     flavorTextDiv: null,
   },
 ];
