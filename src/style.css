@@ -26,7 +26,7 @@ a:hover {
 body {
   margin: 0;
   display: flex;
-  place-items: center;
+  /* place-items: center; */
   min-width: 320px;
   min-height: 100vh;
 }
@@ -95,11 +95,10 @@ button:focus-visible {
 }
 
 #upgrades button {
-  width: 300px; /* Set a fixed width for the buttons */
+  width: 400px; /* Set a fixed width for the buttons */
   margin-bottom: 10px; /* Space between buttons (vertical space) */
   padding: 10px; /* Padding inside the button */
-  display: flex;
-  justify-content: space-between;
+  display: block;
 }
 
 .upgradeButton-NotUpgradable {
@@ -116,18 +115,38 @@ button:focus-visible {
   text-align: left;
 }
 
-#upgrades button div:last-child {
-  /* Optional styling for right div (cost) */
-  font-size: 20px;
-  color: rgb(95, 95, 95);
-  right: 0;
-  padding: 0.5em;
+.upgradeContainer {
+  width: 100%; /* Set a fixed width for the buttons */
+  margin-bottom: 10px; /* Space between buttons (vertical space) */
+  padding: 10px; /* Padding inside the button */
+  display: flex;
 }
 
-#upgrades img {
+.upgradeContainer img {
   width: 20%; /* Set image width to 20% of button */
   height: auto; /* Maintain aspect ratio */
   object-fit: contain; /* Scale image without stretching */
+}
+
+.upgradeContainer div {
+  font-size: 20px; /* Set font size for divs */
+  margin: 0; /* Reset margin */
+}
+
+.upgradeContainer div:nth-child(2) {
+  padding-left: 20px; /* Specific styling for the right div */
+}
+
+.upgradeContainer div:nth-child(3) {
+  margin-left: auto; /* Push the last child all the way to the right */
+  padding: 0.5em; /* Padding inside the div */
+  color: rgb(95, 95, 95);
+}
+
+#upgrades button > div:last-child {
+  font-size: 15px;
+  padding-left: 20px;
+  color: rgb(95, 95, 95);
 }
 
 .mainButton {

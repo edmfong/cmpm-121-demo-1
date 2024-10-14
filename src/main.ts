@@ -4,7 +4,7 @@ const app: HTMLDivElement = document.querySelector("#app")!;
 const upgrades: HTMLDivElement = document.querySelector("#upgrades")!;
 
 const gameName = "Fishy Fish Fish";
-let fish: number = 5000;
+let fish: number = 0;
 let lastTimestamp: number = 0; // Keeps track of the last frame's timestamp
 
 interface Item {
@@ -20,11 +20,13 @@ interface Item {
   button: HTMLButtonElement | null;
   displayRightDiv: HTMLDivElement | null;
   displayLeftDiv: HTMLDivElement | null;
+  flavorText: string;
+  flavorTextDiv: HTMLElement | null;
 }
 
 const availableItems: Item[] = [
   {
-    name: "click",
+    name: "Little Helpers",
     cost: 10,
     rate: 0,
     imgSrc: "img/paw.png",
@@ -36,9 +38,11 @@ const availableItems: Item[] = [
     button: null,
     displayRightDiv: null,
     displayLeftDiv: null,
+    flavorText: "With a swift swipe, the paw snags fish like a pro. Boost your fish-per-click game!",
+    flavorTextDiv: null,
   },
   {
-    name: "cat1",
+    name: "Grumpy Cat",
     cost: 10,
     rate: 0,
     imgSrc: "img/cat1.png",
@@ -50,9 +54,11 @@ const availableItems: Item[] = [
     button: null,
     displayRightDiv: null,
     displayLeftDiv: null,
+    flavorText: "This cat may be grumpy, but it’s still putting in the work. Slow and steady wins the fish!",
+    flavorTextDiv: null,
   },
   {
-    name: "cat2",
+    name: "Gray Cat",
     cost: 100,
     rate: 0,
     imgSrc: "img/cat2.png",
@@ -64,9 +70,11 @@ const availableItems: Item[] = [
     button: null,
     displayRightDiv: null,
     displayLeftDiv: null,
+    flavorText: "Sleek and mysterious, the gray cat brings a bit more fish to the table, when it is in the mood.",
+    flavorTextDiv: null,
   },
   {
-    name: "cat3",
+    name: "Tabby Cat",
     cost: 1000,
     rate: 0,
     imgSrc: "img/cat3.png",
@@ -78,9 +86,11 @@ const availableItems: Item[] = [
     button: null,
     displayRightDiv: null,
     displayLeftDiv: null,
+    flavorText: "Friendly and curious, this tabby is always on the hunt for fish—expect more from this little fisher!",
+    flavorTextDiv: null,
   },
   {
-    name: "cat4",
+    name: "Lucky Cat",
     cost: 5000,
     rate: 0,
     imgSrc: "img/cat4.png",
@@ -92,6 +102,8 @@ const availableItems: Item[] = [
     button: null,
     displayRightDiv: null,
     displayLeftDiv: null,
+    flavorText: "The fish just keep rolling in with this lucky feline! Every second feels like a jackpot.",
+    flavorTextDiv: null,
   },
 ];
 
@@ -101,16 +113,26 @@ function createUpgradeButton(index: number) {
   const upgrade = availableItems[index];
   const upgradeButton = document.createElement("button");
   const rightDiv = document.createElement("div");
-  rightDiv.innerHTML = `Fish Per Sec<br>${upgrade.cost}x 🐟`;
+  rightDiv.innerHTML = `${upgrade.name}<br>${upgrade.cost}x 🐟`;
   const leftDiv = document.createElement("div");
   leftDiv.textContent = `${upgrade.fishPerSecond!.toFixed(0)}`;
   const img = document.createElement("img");
   img.src = upgrade.imgSrc;
+  const flavorTextDiv = document.createElement("div");
+  flavorTextDiv.textContent = `${upgrade.flavorText}`;
 
   // adds elements to the button
-  upgradeButton.append(img);
-  upgradeButton.appendChild(rightDiv);
-  upgradeButton.appendChild(leftDiv);
+  const upgradeContainer = document.createElement("div");
+  upgradeContainer.append(img);
+  upgradeContainer.appendChild(rightDiv);
+  upgradeContainer.appendChild(leftDiv);
+  // upgradeButton.append(img);
+  // upgradeButton.appendChild(rightDiv);
+  // upgradeButton.appendChild(leftDiv);
+  upgradeContainer.classList.add("upgradeContainer");
+  upgradeContainer.classList.add("flavorText");
+  upgradeButton.appendChild(upgradeContainer);
+  upgradeButton.appendChild(flavorTextDiv);
   upgradeButton.disabled = true;
   upgradeButton.classList.add("upgradeButton-NotUpgradable");
 
@@ -121,6 +143,7 @@ function createUpgradeButton(index: number) {
   upgrade.button = upgradeButton;
   upgrade.displayRightDiv = rightDiv;
   upgrade.displayLeftDiv = leftDiv;
+  upgrade.flavorTextDiv = flavorTextDiv;
 }
 
 // Initialize upgrade buttons
@@ -164,7 +187,7 @@ function handleUpgradeClick(index: number) {
     upgrade.upgradesCount++; // Increment the number of upgrades
 
     // Update the UI
-    upgrade.displayRightDiv!.innerHTML = `Fish Per Sec<br>${upgrade.cost.toFixed(0)}x 🐟`;
+    upgrade.displayRightDiv!.innerHTML = `${upgrade.name}<br>${upgrade.cost.toFixed(0)}x 🐟`;
     upgrade.displayLeftDiv!.textContent = `${upgrade.upgradesCount.toFixed(0)}`;
   }
 }
