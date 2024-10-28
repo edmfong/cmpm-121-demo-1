@@ -29,7 +29,8 @@ const availableItems: Item[] = [
     name: "Little Helpers",
     cost: 10,
     rate: 0,
-    imgSrc: "https://raw.githubusercontent.com/edmfong/cmpm-121-demo-1/main/img/paw.png",
+    imgSrc:
+      "https://raw.githubusercontent.com/edmfong/cmpm-121-demo-1/main/img/paw.png",
     fishPerSecond: 0,
     fishPerClick: 1,
     upgradeCostIncrease: 1.15,
@@ -46,7 +47,8 @@ const availableItems: Item[] = [
     name: "Grumpy Cat",
     cost: 10,
     rate: 0,
-    imgSrc: "https://raw.githubusercontent.com/edmfong/cmpm-121-demo-1/main/img/cat1.png",
+    imgSrc:
+      "https://raw.githubusercontent.com/edmfong/cmpm-121-demo-1/main/img/cat1.png",
     fishPerSecond: 0,
     fishPerClick: null,
     upgradeCostIncrease: 1.15,
