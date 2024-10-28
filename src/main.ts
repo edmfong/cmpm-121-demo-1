@@ -29,7 +29,7 @@ const availableItems: Item[] = [
     name: "Little Helpers",
     cost: 10,
     rate: 0,
-    imgSrc: "./img/paw.png",
+    imgSrc: "../img/paw.png",
     fishPerSecond: 0,
     fishPerClick: 1,
     upgradeCostIncrease: 1.15,
@@ -46,7 +46,7 @@ const availableItems: Item[] = [
     name: "Grumpy Cat",
     cost: 10,
     rate: 0,
-    imgSrc: "./img/cat1.png",
+    imgSrc: "../img/cat1.png",
     fishPerSecond: 0,
     fishPerClick: null,
     upgradeCostIncrease: 1.15,
@@ -63,7 +63,7 @@ const availableItems: Item[] = [
     name: "Gray Cat",
     cost: 100,
     rate: 0,
-    imgSrc: "./img/cat2.png",
+    imgSrc: "../img/cat2.png",
     fishPerSecond: 0,
     fishPerClick: null,
     upgradeCostIncrease: 1.15,
@@ -80,7 +80,7 @@ const availableItems: Item[] = [
     name: "Tabby Cat",
     cost: 1000,
     rate: 0,
-    imgSrc: "./img/cat3.png",
+    imgSrc: "../img/cat3.png",
     fishPerSecond: 0,
     fishPerClick: null,
     upgradeCostIncrease: 1.15,
@@ -97,7 +97,7 @@ const availableItems: Item[] = [
     name: "Lucky Cat",
     cost: 5000,
     rate: 0,
-    imgSrc: "./img/cat4.png",
+    imgSrc: "../img/cat4.png",
     fishPerSecond: 0,
     fishPerClick: null,
     upgradeCostIncrease: 1.15,
@@ -213,7 +213,7 @@ app.append(header);
 // main button
 const mainButton = document.createElement("button");
 const fishImg = document.createElement("img");
-fishImg.src = "./img/fish.png";
+fishImg.src = "../img/fish.png";
 mainButton.append(fishImg);
 mainButton.classList.add("mainButton");
 app.appendChild(mainButton);
