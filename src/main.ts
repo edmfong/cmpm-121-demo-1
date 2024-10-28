@@ -123,7 +123,7 @@ function createUpgradeButton(index: number) {
   leftDiv.textContent = `${upgrade.fishPerSecond!.toFixed(0)}`;
   const img = document.createElement("img");
   img.src = upgrade.imgSrc;
-  console.log(img.src)
+  console.log(img.src);
   const flavorTextDiv = document.createElement("div");
   flavorTextDiv.textContent = `${upgrade.flavorText}`;
 
