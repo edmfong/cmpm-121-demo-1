@@ -65,7 +65,8 @@ const availableItems: Item[] = [
     name: "Gray Cat",
     cost: 100,
     rate: 0,
-    imgSrc: "https://raw.githubusercontent.com/edmfong/cmpm-121-demo-1/main/img/cat2.png",
+    imgSrc:
+      "https://raw.githubusercontent.com/edmfong/cmpm-121-demo-1/main/img/cat2.png",
     fishPerSecond: 0,
     fishPerClick: null,
     upgradeCostIncrease: 1.15,
@@ -82,7 +83,8 @@ const availableItems: Item[] = [
     name: "Tabby Cat",
     cost: 1000,
     rate: 0,
-    imgSrc: "https://raw.githubusercontent.com/edmfong/cmpm-121-demo-1/main/img/cat3.png",
+    imgSrc:
+      "https://raw.githubusercontent.com/edmfong/cmpm-121-demo-1/main/img/cat3.png",
     fishPerSecond: 0,
     fishPerClick: null,
     upgradeCostIncrease: 1.15,
@@ -99,7 +101,8 @@ const availableItems: Item[] = [
     name: "Lucky Cat",
     cost: 5000,
     rate: 0,
-    imgSrc: "https://raw.githubusercontent.com/edmfong/cmpm-121-demo-1/main/img/cat4.png",
+    imgSrc:
+      "https://raw.githubusercontent.com/edmfong/cmpm-121-demo-1/main/img/cat4.png",
     fishPerSecond: 0,
     fishPerClick: null,
     upgradeCostIncrease: 1.15,
@@ -215,7 +218,8 @@ app.append(header);
 // main button
 const mainButton = document.createElement("button");
 const fishImg = document.createElement("img");
-fishImg.src = "https://raw.githubusercontent.com/edmfong/cmpm-121-demo-1/main/img/fish.png";
+fishImg.src =
+  "https://raw.githubusercontent.com/edmfong/cmpm-121-demo-1/main/img/fish.png";
 mainButton.append(fishImg);
 mainButton.classList.add("mainButton");
 app.appendChild(mainButton);
