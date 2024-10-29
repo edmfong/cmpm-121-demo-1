@@ -183,7 +183,7 @@ function handleUpgradeClick(index: number) {
   const upgrade = availableItems[index];
 
   if (!upgrade.button!.disabled) {
-    if (index === 0 && upgrade.fishPerClick !== null) { 
+    if (index === 0 && upgrade.fishPerClick !== null) {
       // Specific operation for the "Little Helpers" item
       upgrade.fishPerClick += 1; // Enhance fishPerClick specifically
     } else {
@@ -263,13 +263,17 @@ function calculateElapsed(timestamp: number, lastTimestamp: number): number {
 }
 
 function incrementFish(elapsed: number) {
-  const fishPerSecond = availableItems.slice(1).reduce((sum, item) => sum + (item.fishPerSecond || 0), 0);
+  const fishPerSecond = availableItems
+    .slice(1)
+    .reduce((sum, item) => sum + (item.fishPerSecond || 0), 0);
   fish += elapsed * fishPerSecond;
 }
 
 function updateDisplay() {
-  const currentFishPerSecond = availableItems.slice(1).reduce((sum, item) => sum + (item.fishPerSecond || 0), 0);
-  counterDisplay.innerHTML = `${fish.toFixed(0)} 🐟<br>${currentFishPerSecond.toFixed(2)} Fish/sec`; 
+  const currentFishPerSecond = availableItems
+    .slice(1)
+    .reduce((sum, item) => sum + (item.fishPerSecond || 0), 0);
+  counterDisplay.innerHTML = `${fish.toFixed(0)} 🐟<br>${currentFishPerSecond.toFixed(2)} Fish/sec`;
 }
 
 // Start the animation loop
