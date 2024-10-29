@@ -6,6 +6,7 @@ const upgrades: HTMLDivElement = document.querySelector("#upgrades")!;
 const gameName = "Fishy Fish Fish";
 let fish: number = 0;
 let lastTimestamp: number = 0; // Keeps track of the last frame's timestamp
+const upgradeCostIncrease = 1.15;
 
 interface Item {
   name: string;
@@ -33,7 +34,7 @@ const availableItems: Item[] = [
       "https://raw.githubusercontent.com/edmfong/cmpm-121-demo-1/main/img/paw.png",
     fishPerSecond: 0,
     fishPerClick: 1,
-    upgradeCostIncrease: 1.15,
+    upgradeCostIncrease: upgradeCostIncrease,
     initialUpgrade: 0,
     upgradesCount: 0,
     button: null,
@@ -51,7 +52,7 @@ const availableItems: Item[] = [
       "https://raw.githubusercontent.com/edmfong/cmpm-121-demo-1/main/img/cat1.png",
     fishPerSecond: 0,
     fishPerClick: null,
-    upgradeCostIncrease: 1.15,
+    upgradeCostIncrease: upgradeCostIncrease,
     initialUpgrade: 1,
     upgradesCount: 0,
     button: null,
@@ -69,7 +70,7 @@ const availableItems: Item[] = [
       "https://raw.githubusercontent.com/edmfong/cmpm-121-demo-1/main/img/cat2.png",
     fishPerSecond: 0,
     fishPerClick: null,
-    upgradeCostIncrease: 1.15,
+    upgradeCostIncrease: upgradeCostIncrease,
     initialUpgrade: 5,
     upgradesCount: 0,
     button: null,
@@ -87,7 +88,7 @@ const availableItems: Item[] = [
       "https://raw.githubusercontent.com/edmfong/cmpm-121-demo-1/main/img/cat3.png",
     fishPerSecond: 0,
     fishPerClick: null,
-    upgradeCostIncrease: 1.15,
+    upgradeCostIncrease: upgradeCostIncrease,
     initialUpgrade: 50,
     upgradesCount: 0,
     button: null,
@@ -105,7 +106,7 @@ const availableItems: Item[] = [
       "https://raw.githubusercontent.com/edmfong/cmpm-121-demo-1/main/img/cat4.png",
     fishPerSecond: 0,
     fishPerClick: null,
-    upgradeCostIncrease: 1.15,
+    upgradeCostIncrease: upgradeCostIncrease,
     initialUpgrade: 100,
     upgradesCount: 0,
     button: null,
@@ -136,9 +137,6 @@ function createUpgradeButton(index: number) {
   upgradeContainer.append(img);
   upgradeContainer.appendChild(rightDiv);
   upgradeContainer.appendChild(leftDiv);
-  // upgradeButton.append(img);
-  // upgradeButton.appendChild(rightDiv);
-  // upgradeButton.appendChild(leftDiv);
   upgradeContainer.classList.add("upgradeContainer");
   upgradeContainer.classList.add("flavorText");
   upgradeButton.appendChild(upgradeContainer);
@@ -184,17 +182,22 @@ availableItems.forEach((_, index) => {
 function handleUpgradeClick(index: number) {
   const upgrade = availableItems[index];
 
-  // if disbled, check if there is enough fish to upgrade
   if (!upgrade.button!.disabled) {
-    if (upgrade.fishPerSecond == 0) {
-      upgrade.fishPerSecond = upgrade.initialUpgrade; // Initial fish per second
+    if (index === 0 && upgrade.fishPerClick !== null) { 
+      // Specific operation for the "Little Helpers" item
+      upgrade.fishPerClick += 1; // Enhance fishPerClick specifically
     } else {
-      upgrade.fishPerSecond! *= 1.15; // Increase fish per second by 15%
+      // Existing upgrade logic for fishPerSecond
+      if (upgrade.fishPerSecond === 0) {
+        upgrade.fishPerSecond = upgrade.initialUpgrade;
+      } else {
+        upgrade.fishPerSecond! *= 1.15;
+      }
     }
 
-    fish -= upgrade.cost; // Deduct the cost from the fish total
-    upgrade.cost *= upgrade.upgradeCostIncrease; // Increase the cost for the next upgrade
-    upgrade.upgradesCount++; // Increment the number of upgrades
+    fish -= upgrade.cost;
+    upgrade.cost *= upgrade.upgradeCostIncrease;
+    upgrade.upgradesCount++;
 
     // Update the UI
     upgrade.displayRightDiv!.innerHTML = `${upgrade.name}<br>${upgrade.cost.toFixed(0)}x 🐟`;
@@ -236,29 +239,38 @@ const counterDisplay = document.getElementById(
 ) as HTMLDivElement;
 
 // Function to increment the fish counter based on elapsed time
-const updateCounter = (timestamp: number) => {
+function updateCounter(timestamp: number) {
   if (!lastTimestamp) lastTimestamp = timestamp;
 
-  const elapsed = timestamp - lastTimestamp; // Time elapsed since last frame
-  const increment = elapsed / 1000; // Increment by a fraction based on time (1 unit per second)
+  const elapsed = calculateElapsed(timestamp, lastTimestamp);
 
-  fish +=
-    increment *
-    (availableItems[1].fishPerSecond! +
-      availableItems[2].fishPerSecond! +
-      availableItems[3].fishPerSecond! +
-      availableItems[4].fishPerSecond!);
-  counterDisplay.innerHTML = `${fish.toFixed(0)} 🐟<br>
-      ${(availableItems[1].fishPerSecond! + availableItems[2].fishPerSecond! + availableItems[3].fishPerSecond! + availableItems[4].fishPerSecond!).toFixed(2)} Fish/sec`; // Update counter display with 0 decimal places
+  incrementFish(elapsed);
+  updateDisplay();
 
-  lastTimestamp = timestamp; // Update the last timestamp
-  requestAnimationFrame(updateCounter); // Call the next animation frame
+  lastTimestamp = timestamp;
 
-  // check upgrade buttons
+  // Continue the animation loop
+  requestAnimationFrame(updateCounter);
+
+  // Check upgrade buttons
   availableItems.forEach((_, index) => {
     checkUpgradeAvailability(index);
   });
-};
+}
+
+function calculateElapsed(timestamp: number, lastTimestamp: number): number {
+  return (timestamp - lastTimestamp) / 1000; // Elapsed time in seconds
+}
+
+function incrementFish(elapsed: number) {
+  const fishPerSecond = availableItems.slice(1).reduce((sum, item) => sum + (item.fishPerSecond || 0), 0);
+  fish += elapsed * fishPerSecond;
+}
+
+function updateDisplay() {
+  const currentFishPerSecond = availableItems.slice(1).reduce((sum, item) => sum + (item.fishPerSecond || 0), 0);
+  counterDisplay.innerHTML = `${fish.toFixed(0)} 🐟<br>${currentFishPerSecond.toFixed(2)} Fish/sec`; 
+}
 
 // Start the animation loop
 requestAnimationFrame(updateCounter);
