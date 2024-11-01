@@ -118,9 +118,8 @@ const availableItems: Item[] = [
   },
 ];
 
-// Create the upgrade buttons and associated elements
 function createUpgradeButton(index: number) {
-  // create button
+  // Create button and elements
   const upgrade = availableItems[index];
   const upgradeButton = document.createElement("button");
   const rightDiv = document.createElement("div");
@@ -129,22 +128,32 @@ function createUpgradeButton(index: number) {
   leftDiv.textContent = `${upgrade.fishPerSecond!.toFixed(0)}`;
   const img = document.createElement("img");
   img.src = upgrade.imgSrc;
+
+  // Flavor text div, initially hidden
   const flavorTextDiv = document.createElement("div");
   flavorTextDiv.textContent = `${upgrade.flavorText}`;
+  flavorTextDiv.style.display = "none"; // Hide initially
 
-  // adds elements to the button
+  // Add elements to the button
   const upgradeContainer = document.createElement("div");
   upgradeContainer.append(img);
   upgradeContainer.appendChild(rightDiv);
   upgradeContainer.appendChild(leftDiv);
   upgradeContainer.classList.add("upgradeContainer");
-  upgradeContainer.classList.add("flavorText");
   upgradeButton.appendChild(upgradeContainer);
   upgradeButton.appendChild(flavorTextDiv);
   upgradeButton.disabled = true;
   upgradeButton.classList.add("upgradeButton-NotUpgradable");
 
-  // appends button to the DOM
+  // Show flavor text on hover
+  upgradeButton.addEventListener("mouseover", () => {
+    flavorTextDiv.style.display = "block";
+  });
+  upgradeButton.addEventListener("mouseout", () => {
+    flavorTextDiv.style.display = "none";
+  });
+
+  // Append button to the DOM
   upgrades.appendChild(upgradeButton);
 
   // Store references in the upgrade data
