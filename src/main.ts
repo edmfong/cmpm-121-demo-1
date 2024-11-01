@@ -123,7 +123,12 @@ function createUpgradeButton(index: number) {
   const upgrade = availableItems[index];
   const upgradeButton = document.createElement("button");
   const rightDiv = document.createElement("div");
-  rightDiv.innerHTML = `${upgrade.name}<br>${upgrade.cost}x 🐟`;
+  if (upgrade.fishPerClick == null) {
+    rightDiv.innerHTML = `<b>${upgrade.name}</b><br>Cost: ${upgrade.cost % 1 === 0 ? upgrade.cost.toFixed(0) : upgrade.cost.toFixed(2)}x 🐟<br>Fish/sec: ${upgrade.fishPerSecond! % 1 === 0 ? upgrade.fishPerSecond!.toFixed(0) : upgrade.fishPerSecond!.toFixed(2)}`;
+  } 
+  else {
+    rightDiv.innerHTML = `<b>${upgrade.name}</b><br>Cost: ${upgrade.cost % 1 === 0 ? upgrade.cost.toFixed(0) : upgrade.cost.toFixed(2)}x 🐟<br>Fish/click: ${upgrade.fishPerClick % 1 === 0 ? upgrade.fishPerClick.toFixed(0) : upgrade.fishPerClick.toFixed(2)}`;
+  }
   const leftDiv = document.createElement("div");
   leftDiv.textContent = `${upgrade.fishPerSecond!.toFixed(0)}`;
   const img = document.createElement("img");
@@ -209,7 +214,12 @@ function handleUpgradeClick(index: number) {
     upgrade.upgradesCount++;
 
     // Update the UI
-    upgrade.displayRightDiv!.innerHTML = `${upgrade.name}<br>${upgrade.cost.toFixed(0)}x 🐟`;
+    if (upgrade.fishPerClick == null) {
+      upgrade.displayRightDiv!.innerHTML = `<b>${upgrade.name}</b><br>Cost: ${upgrade.cost % 1 === 0 ? upgrade.cost.toFixed(0) : upgrade.cost.toFixed(2)}x 🐟<br>Fish/sec: ${upgrade.fishPerSecond! % 1 === 0 ? upgrade.fishPerSecond!.toFixed(0) : upgrade.fishPerSecond!.toFixed(2)}`;
+    } 
+    else {
+      upgrade.displayRightDiv!.innerHTML = `<b>${upgrade.name}</b><br>Cost: ${upgrade.cost % 1 === 0 ? upgrade.cost.toFixed(0) : upgrade.cost.toFixed(2)}x 🐟<br>Fish/click: ${upgrade.fishPerClick % 1 === 0 ? upgrade.fishPerClick.toFixed(0) : upgrade.fishPerClick.toFixed(2)}`;
+    }
     upgrade.displayLeftDiv!.textContent = `${upgrade.upgradesCount.toFixed(0)}`;
   }
 }
