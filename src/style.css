@@ -4,7 +4,7 @@
   font-weight: 400;
 
   color-scheme: light dark;
-  color:  	#064273;
+  color: #064273;
   background-color: #7fcdff;
 
   font-synthesis: none;
@@ -87,7 +87,9 @@ button:focus-visible {
 
 #upgrades {
   position: absolute;
-  top: calc(10% + 10px); /* Positioned below the height of #counterDisplay + 10px margin */
+  top: calc(
+    10% + 10px
+  ); /* Positioned below the height of #counterDisplay + 10px margin */
   right: 0;
   padding: 10px;
   font-size: 20px;
