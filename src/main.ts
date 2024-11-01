@@ -1,3 +1,6 @@
+/**
+ * Credits: https://zaneshan.github.io/cmpm-121-demo-1/ - for inpiration of adding fish/sec or click to the buttons and adding hover to display flavortext
+ */
 import "./style.css";
 
 const app: HTMLDivElement = document.querySelector("#app")!;
